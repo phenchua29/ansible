@@ -4,10 +4,13 @@
   ansible.builtin.package:
     name:
       - pipewire
+      - lib32-pipewire
+      - pipewire-docs
       - pipewire-audio # To enable audio server support
-      - pipewire-pulse # API implementation for applications using pulseaudio
+      - pipewire-pulse # API implementation for applications using pulseaudio, also for bluetooth devices support
       - pipewire-alsa # API implementation for applications using alsa
       - alsa-utils # To control sounds
+      - pavucontrol # GUI audio control
     state: present
 
 - name: Enable user services
@@ -25,3 +28,6 @@
         enabled: true
         state: started
         scope: user
+
+- name: Setup auto audio switching
+  ansible.builtin.include_tasks: ./session.yml

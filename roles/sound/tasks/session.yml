@@ -1,0 +1,36 @@
+---
+- name: Install session manager
+  become: true
+  ansible.builtin.package:
+    name: wireplumber
+    state: present
+
+- name: Run wireplumber user service
+  ansible.builtin.systemd_service:
+    name: wireplumber
+    enabled: true
+    state: started
+    scope: user
+
+# - name: Setup config
+  # block:
+    # - name: Remove existing config if not a symlink
+      # ansible.builtin.file:
+        # path: "~/.config/pipewire"
+        # state: absent
+
+    # - name: Create symbolic link for config folder
+      # ansible.builtin.file:
+        # path: "~/.config/pipewire"
+        # src: "~/dotfiles/pipewire"
+        # state: link
+
+    # - name: Restart all PipeWire-related user services
+      # ansible.builtin.systemd_service:
+        # name: "{{ item }}"
+        # state: restarted
+        # scope: user
+      # loop:
+        # - pipewire
+        # - pipewire-pulse
+        # - wireplumber
