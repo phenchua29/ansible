@@ -1,0 +1,19 @@
+---
+- name: Install packages for archlinux
+  become: true
+  community.general.pacman:
+    name:
+      - neovim
+      - gcc
+      - pnpm # install-dependency.sh
+      - wl-clipboard
+      - fd # Search
+      - ripgrep # Search
+      - fzf # Search
+      - ttf-hack-nerd
+      - unzip # Mason
+      - npm # Mason
+      - rust # Mason
+      - lazygit
+      - bat # For fzf-lua
+      - maven # For java-language-server

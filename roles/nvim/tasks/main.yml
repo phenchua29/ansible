@@ -1,21 +1,6 @@
 ---
 - name: Install packages
-  become: true
-  ansible.builtin.package:
-    name: 
-      - neovim
-      - gcc
-      - pnpm # install-dependency.sh
-      - wl-clipboard
-      - fd # Search
-      - ripgrep # Search
-      - fzf # Search
-      - ttf-hack-nerd 
-      - unzip # Mason
-      - npm # Mason
-      - lazygit
-      - bat # For fzf-lua
-    state: present
+  include_tasks: '{{ ansible_os_family | lower }}.yml'
 
 - name: Setup config
   block:
@@ -38,3 +23,5 @@
 
 - name: Install all nvim dependencies
   ansible.builtin.command: ~/.config/nvim/install-dependency.sh
+  register: rc
+  changed_when: rc is success
