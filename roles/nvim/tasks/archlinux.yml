@@ -17,3 +17,4 @@
       - lazygit
       - bat # For fzf-lua
       - maven # For java-language-server
+      - imagemagick # image.nvim
