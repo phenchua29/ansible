@@ -5,7 +5,7 @@
     name:
       - neovim
       - gcc
-      - pnpm # install-dependency.sh
+      - pnpm # tree-sitter-cli
       - wl-clipboard
       - fd # Search
       - ripgrep # Search
@@ -14,7 +14,13 @@
       - unzip # Mason
       - npm # Mason
       - rust # Mason
+      - go # Mason / LSP
       - lazygit
       - bat # For fzf-lua
       - maven # For java-language-server
       - imagemagick # image.nvim
+      - d2
+
+- name: Apply chezmoi nvim dotfiles
+  ansible.builtin.command: chezmoi apply ~/.config/nvim
+  changed_when: false

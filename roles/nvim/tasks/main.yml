@@ -1,27 +1,8 @@
 ---
 - name: Install packages
-  include_tasks: '{{ ansible_os_family | lower }}.yml'
+  ansible.builtin.include_tasks: '{{ ansible_os_family | lower }}.yml'
 
-- name: Setup config
-  block:
-    - name: Remove existing config if not a symlink
-      ansible.builtin.file:
-        path: "{{ ansible_env.HOME }}/.config/nvim"
-        state: absent
-      when: not ansible_stat_result.stat.islnk | default(false)
-
-    - name: Create symbolic link for config folder
-      ansible.builtin.file:
-        path: "{{ ansible_env.HOME }}/.config/nvim"
-        src: "{{ ansible_env.HOME }}/dotfiles/nvim"
-        state: link
-
-- name: Make install dependencies script runnable
-  ansible.builtin.file:
-    path: "~/.config/nvim/install-dependency.sh"
-    mode: u=rwx
-
-- name: Install all nvim dependencies
-  ansible.builtin.command: ~/.config/nvim/install-dependency.sh
-  register: rc
-  changed_when: rc is success
+- name: Install tree-sitter-cli via pnpm
+  community.general.pnpm:
+    name: tree-sitter-cli
+    global: true
