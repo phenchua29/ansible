@@ -5,7 +5,6 @@
     name:
       - neovim
       - gcc
-      - pnpm # tree-sitter-cli
       - wl-clipboard
       - fd # Search
       - ripgrep # Search
@@ -20,7 +19,11 @@
       - maven # For java-language-server
       - imagemagick # image.nvim
       - d2
+      - base-devel # Compile C codes
+      - tree-sitter-cli
+      - jdk21-openjdk
 
 - name: Apply chezmoi nvim dotfiles
-  ansible.builtin.command: chezmoi apply ~/.config/nvim
-  changed_when: false
+  ansible.builtin.command:
+    cmd: chezmoi apply ~/.config/nvim
+    creates: ~/.config/nvim
