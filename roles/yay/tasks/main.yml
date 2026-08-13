@@ -12,11 +12,13 @@
     repo: "{{ yay_repo }}"
     dest: "{{ yay_dir }}"
 
-- name: Build and install Yay
+- name: Build Yay package
   ansible.builtin.command:
-    argv: 
-      - makepkg 
-      - -si 
-      - --noconfirm
+    cmd: makepkg -f --noconfirm
     chdir: "{{ yay_dir }}"
 
+- name: Install built Yay package
+  ansible.builtin.shell:
+    cmd: pacman -U --noconfirm *.pkg.tar.zst
+    chdir: "{{ yay_dir }}"
+  become: true
